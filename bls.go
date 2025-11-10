@@ -2,7 +2,6 @@ package main
 
 import (
 	"crypto/rand"
-
 	e "github.com/cloudflare/circl/ecc/bls12381"
 )
 
@@ -27,9 +26,7 @@ func KeyGen() KeyPair {
 }
 
 func Sign(sk *e.Scalar, msg []byte) Signature {
-	h := new(e.G1)
-	dst := []byte(SignatureDst)
-	h.Hash(msg, dst)
+	h := hashToG1(msg)
 
 	signature := new(e.G1)
 	signature.ScalarMult(sk, h)
@@ -38,15 +35,20 @@ func Sign(sk *e.Scalar, msg []byte) Signature {
 }
 
 func Verify(pk PublicKey, msg []byte, s Signature) bool {
-	h := new(e.G1)
-	dst := []byte(SignatureDst)
-
-	h.Hash(msg, dst)
+	h := hashToG1(msg)
 
 	gt1 := e.Pair(h, pk)
 
 	gt2 := e.Pair(s, e.G2Generator())
 
 	return gt1.IsEqual(gt2)
+}
 
+func hashToG1(msg []byte) *e.G1 {
+	h := new(e.G1)
+	dst := []byte(SignatureDst)
+
+	h.Hash(msg, dst)
+
+	return h
 }
