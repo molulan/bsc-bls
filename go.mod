@@ -1,4 +1,4 @@
-module github.com/molulan/bsc-bls-signatures
+module github.com/molulan/bsc-bls
 
 go 1.24.9
 
