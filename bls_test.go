@@ -5,13 +5,13 @@ import (
 )
 
 func TestSignAndVerifySucces(t *testing.T) {
-	msg := []byte("msg")
+	var msg Message = []byte("msg")
 
 	keyPair := KeyGen()
 
-	signature := Sign(keyPair.SecretKey, msg)
+	signature := Sign(msg, keyPair.SecretKey)
 
-	ok :=  Verify(keyPair.PublicKey, msg, signature)
+	ok := Verify(msg, signature, keyPair.PublicKey)
 
 	if !ok {
 		t.Errorf("Signature should be valid")
@@ -24,9 +24,9 @@ func TestSignAndVerifyDifferentMessages(t *testing.T) {
 
 	keyPair := KeyGen()
 
-	signature := Sign(keyPair.SecretKey, msg1)
+	signature := Sign(msg1, keyPair.SecretKey)
 
-	ok := Verify(keyPair.PublicKey, msg2, signature)
+	ok := Verify(msg2, signature, keyPair.PublicKey)
 
 	if ok {
 		t.Errorf("Signature should not be valid")
@@ -39,9 +39,9 @@ func TestSignAndVerifyWithWrongKeys(t *testing.T) {
 	keyPair1 := KeyGen()
 	keyPair2 := KeyGen()
 
-	signature := Sign(keyPair1.SecretKey, msg)
+	signature := Sign(msg, keyPair1.SecretKey)
 
-	ok := Verify(keyPair2.PublicKey, msg, signature)
+	ok := Verify(msg, signature, keyPair2.PublicKey)
 
 	if ok {
 		t.Errorf("Signature should not be valid")
@@ -57,7 +57,7 @@ func TestKeyGenReturnsUniqueKeyPairs(t *testing.T) {
 		if secretKeySet[kp.SecretKey] || publicKeySet[kp.PublicKey] {
 			t.Errorf("duplicate key found")
 		}
-		
+
 		secretKeySet[kp.SecretKey] = true
 		publicKeySet[kp.PublicKey] = true
 	}
