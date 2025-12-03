@@ -4,50 +4,6 @@ import (
 	"testing"
 )
 
-func TestSignAndVerifySucces(t *testing.T) {
-	var msg Message = []byte("msg")
-
-	keyPair := KeyGen()
-
-	signature := Sign(msg, keyPair.SecretKey)
-
-	ok := Verify(msg, signature, keyPair.PublicKey)
-
-	if !ok {
-		t.Errorf("Signature should be valid")
-	}
-}
-
-func TestSignAndVerifyDifferentMessages(t *testing.T) {
-	msg1 := []byte("msg1")
-	msg2 := []byte("msg2")
-
-	keyPair := KeyGen()
-
-	signature := Sign(msg1, keyPair.SecretKey)
-
-	ok := Verify(msg2, signature, keyPair.PublicKey)
-
-	if ok {
-		t.Errorf("Signature should not be valid")
-	}
-}
-
-func TestSignAndVerifyWithWrongKeys(t *testing.T) {
-	msg := []byte("msg")
-
-	keyPair1 := KeyGen()
-	keyPair2 := KeyGen()
-
-	signature := Sign(msg, keyPair1.SecretKey)
-
-	ok := Verify(msg, signature, keyPair2.PublicKey)
-
-	if ok {
-		t.Errorf("Signature should not be valid")
-	}
-}
-
 func TestKeyGenReturnsUniqueKeyPairs(t *testing.T) {
 	secretKeySet := make(map[SecretKey]bool)
 	publicKeySet := make(map[PublicKey]bool)
@@ -55,7 +11,7 @@ func TestKeyGenReturnsUniqueKeyPairs(t *testing.T) {
 	for range 1000 {
 		kp := KeyGen()
 		if secretKeySet[kp.SecretKey] || publicKeySet[kp.PublicKey] {
-			t.Errorf("duplicate key found")
+			t.Error("duplicate key found")
 		}
 
 		secretKeySet[kp.SecretKey] = true
@@ -63,99 +19,281 @@ func TestKeyGenReturnsUniqueKeyPairs(t *testing.T) {
 	}
 }
 
-func TestMuSignAndMuVerifyWith1Signer(t *testing.T) {
-	msg := []byte("msg")
 
-	keyPair := KeyGen()
+var singlesigSignAndVerifyTestCases = []struct {
+        name         	string
+        matchingKeys 	bool
+        matchingMsgs 	bool
+        expectedResult 	bool
+    }{
+        {
+            name:         	"same_keys_same_message",
+            matchingKeys: 	true,
+            matchingMsgs: 	true,
+            expectedResult: true,
+        },
+        {
+            name:         	"same_keys_different_message", 
+            matchingKeys: 	true,
+            matchingMsgs: 	false,
+            expectedResult: false,
+        },
+        {
+            name:         	"different_keys_same_message",
+            matchingKeys: 	false,
+            matchingMsgs: 	true,
+            expectedResult: false,
+        },
+        {
+            name:         	"different_keys_different_message",
+            matchingKeys: 	false,
+            matchingMsgs: 	false,
+            expectedResult: false,
+        },
+    }
 
-	pks := []PublicKey{keyPair.PublicKey}
+func TestSinglesigSignAndVerify(t *testing.T) {
+    for _, test := range singlesigSignAndVerifyTestCases {
+        t.Run(test.name, func(t *testing.T) {
+            // Arrange
+            keyPair1 := KeyGen()
+            var keyPair2 KeyPair
+            if test.matchingKeys {
+                keyPair2 = keyPair1
+            } else {
+                keyPair2 = KeyGen()
+            }
 
-	apk := KeyAggregation(pks)
+            msg1 := []byte("test message")
+            var msg2 Message
+            if test.matchingMsgs {
+                msg2 = []byte("test message")
+            } else {
+                msg2 = []byte("different message")
+            }
 
-	signature := MuSign(msg, keyPair, pks, apk)
+            // Act
+            signature := Sign(msg1, keyPair1.SecretKey)
+            result := Verify(msg2, signature, keyPair2.PublicKey)
 
-	ok := VerifyMultisig(msg, signature, apk)
-
-	if !ok {
-		t.Errorf("Signature should be valid")
-	}
+            // Assert
+            if result != test.expectedResult {
+                t.Errorf("Verify() = %v, want %v", result, test.expectedResult)
+            }
+        })
+    }
 }
 
-func TestMuSignAndMuVerifyWithMultipleSigners(t *testing.T) {
-	n := 100
 
-	msg := []byte("msg")
-
-	pks := make([]PublicKey, n)
-	kps := make([]KeyPair, n)
-
-	for i := range n {
-		kp := KeyGen()
-		kps[i] = kp
-		pks[i] = kp.PublicKey
-	}
-
-	apk := KeyAggregation(pks)
-
-	partial_sigs := make([]Signature, n)
-
-	for i, kp := range kps {
-		partial_sigs[i] = MuSign(msg, kp, pks, apk)
-	}
-
-	multiSig := SignatureAggregation(partial_sigs)
-
-	ok := VerifyMultisig(msg, multiSig, apk)
-
-	if !ok {
-		t.Errorf("Signature should be valid")
-	}
+var multisigSignAndVerifyTestCases = []struct {
+    name              	string
+	requiredSigners		int
+    numSigners        	int
+    matchingMsgs      	bool
+    expectedResult    	bool
+}{
+    {
+        name:             	"valid signature with 1 signer",
+		requiredSigners:	1,
+        numSigners:       	1,
+        matchingMsgs:     	true,
+        expectedResult:   	true,
+    },
+	{
+		name:				"valid signature with multiple signers",
+		requiredSigners: 	100,
+		numSigners: 		100,
+		matchingMsgs: 		true,
+		expectedResult: 	true,
+	},
+    {
+        name:             	"invalid signature - wrong message",
+		requiredSigners:	3,
+        numSigners:       	3,
+        matchingMsgs:     	false,
+        expectedResult:   	false,
+    },
+	{
+		name:				"invalid signature - not enough signers",
+		requiredSigners: 	3,
+		numSigners: 		2,
+		matchingMsgs:		true,
+		expectedResult: 	false,
+	},
 }
 
-func TestMuSignAndMuVerifyWithAggregatedMultiSig(t *testing.T) {
+func TestMultisigSignAndVerify(t *testing.T) {
+    for _, test := range multisigSignAndVerifyTestCases {
+        t.Run(test.name, func(t *testing.T) {
+			// Arrange
+            msg := []byte("original message")
 
+            kps, ctx := setupMultisigContext(t, test.requiredSigners)
+             
+        	partialSigs := make([]Signature, test.numSigners)
+        	for i := range test.numSigners {
+        	    partialSigs[i] = ctx.Sign(msg, kps[i])
+			}
+
+        	signature, err := SignatureAggregation(partialSigs)
+        	if err != nil {
+        	    t.Fatalf("Failed to aggregate signatures: %v", err)
+        	}
+
+			if !test.matchingMsgs {
+                msg = []byte("wrong message")
+            }
+
+            // Act
+            result := ctx.Verify(msg, signature)
+            
+			// Assert
+            if result != test.expectedResult {
+                t.Errorf("Verify() = %v, want %v", result, test.expectedResult)
+            }
+        })
+    }
+}
+
+
+func TestMultisigSignWithNonParticipant(t *testing.T) {
+	// Arrange
+    _, ctx := setupMultisigContext(t, 1)
+    outsiderKp := KeyGen()
+    
+    msg := []byte("msg")
+    signature := ctx.Sign(msg, outsiderKp)
+	expectedResult := false
+
+	// Act
+	result := ctx.Verify(msg, signature)
+    
+    // Assert
+    if result != expectedResult {
+        t.Errorf("Verify() = %v, want %v", result, expectedResult)
+    }
+}
+
+
+func TestVerifyAggregatedMultiSig(t *testing.T) {
+	// Arrange
+	//multisig group 1
+	kps1, ctx1 := setupMultisigContext(t, 5)
 	msg1 := []byte("msg1")
-	msg2 := []byte("msg2")
-	msg3 := []byte("msg3")
-
-	kps1, pks1, apk1 := setupKeys(5)
-	kps2, pks2, apk2 := setupKeys(3)
-	kps3, pks3, apk3 := setupKeys(4)
-
 	partial_sigs1 := make([]Signature, 5)
-	partial_sigs2 := make([]Signature, 3)
-	partial_sigs3 := make([]Signature, 4)
-
 	for i, kp := range kps1 {
-		partial_sigs1[i] = MuSign(msg1, kp, pks1, apk1)
+		partial_sigs1[i] = ctx1.Sign(msg1, kp)
 	}
+	multiSig1, _ := SignatureAggregation(partial_sigs1)
+
+	// multisig group 2
+	kps2, ctx2 := setupMultisigContext(t, 3)
+	msg2 := []byte("msg2")
+	partial_sigs2 := make([]Signature, 3)
 	for i, kp := range kps2 {
-		partial_sigs2[i] = MuSign(msg2, kp, pks2, apk2)
+		partial_sigs2[i] = ctx2.Sign(msg2, kp)
 	}
+	multiSig2, _ := SignatureAggregation(partial_sigs2)
+
+	// multisig group 3
+	kps3, ctx3 := setupMultisigContext(t, 4)
+	msg3 := []byte("msg3")
+	partial_sigs3 := make([]Signature, 4)
 	for i, kp := range kps3 {
-		partial_sigs3[i] = MuSign(msg3, kp, pks3, apk3)
+		partial_sigs3[i] = ctx3.Sign(msg3, kp)
 	}
+	multiSig3, _ := SignatureAggregation(partial_sigs3)
 
-	multiSig1 := SignatureAggregation(partial_sigs1)
-	multiSig2 := SignatureAggregation(partial_sigs2)
-	multiSig3 := SignatureAggregation(partial_sigs3)
-
-	multisigs := []Signature{multiSig1, multiSig2, multiSig3}
-
-	aggregateMultiSig := SignatureAggregation(multisigs)
+	// Aggregate signatures
+	signatures := []Signature{multiSig1, multiSig2, multiSig3}
+	aggregateMultiSig, _ := SignatureAggregation(signatures)
 
 	msgs :=[]Message{msg1, msg2, msg3}
+	apks := []PublicKey{ctx1.AggregatePk, ctx2.AggregatePk, ctx3.AggregatePk}
+	expectedResult := true
 
-	apks := []PublicKey{apk1, apk2, apk3}
+	// Act
+	result, _ := VerifyAggregateMultisig(msgs, aggregateMultiSig, apks)
 
-	ok := VerifyAggregateMultisig(msgs, aggregateMultiSig, apks)
-
-	if !ok {
-		t.Errorf("Signature should be valid")
+	// Assert
+	if result != expectedResult {
+		t.Error("Signature should be valid")
 	}
 }
 
-func setupKeys(n int) ([]KeyPair, []PublicKey, PublicKey) {
+
+func TestVerifyAggregatedMultiSig_WithWrongMessage(t *testing.T) {
+	// Arrange
+	// multisig group 1
+    msg1 := []byte("message 1")
+    kps1, ctx1 := setupMultisigContext(t, 3)
+    partialSigs1 := make([]Signature, len(kps1))
+    for i, kp := range kps1 {
+        partialSigs1[i] = ctx1.Sign(msg1, kp)
+    }
+    multiSig1, _ := SignatureAggregation(partialSigs1)
+
+    // multisig group 2
+    msg2 := []byte("message 2")
+    kps2, ctx2 := setupMultisigContext(t, 2)
+    partialSigs2 := make([]Signature, len(kps2))
+    for i, kp := range kps2 {
+        partialSigs2[i] = ctx2.Sign(msg2, kp)
+    }
+    multiSig2, _ := SignatureAggregation(partialSigs2)
+
+	// Aggregate signatures
+	signatures := []Signature{multiSig1, multiSig2}
+    aggregatedMultiSig, _ := SignatureAggregation(signatures)
+
+    wrongMsg1 := []byte("wrong message")
+    msgs := []Message{wrongMsg1, msg2} 
+    apks := []PublicKey{ctx1.AggregatePk, ctx2.AggregatePk}
+
+	expectedResult := false
+
+	// Act
+    result, _ := VerifyAggregateMultisig(msgs, aggregatedMultiSig, apks)
+
+	//Assert
+    if result != expectedResult {
+        t.Error("Aggregated multisig should not verify with wrong message")
+    }
+}
+
+
+func TestSignatureAggregationWithNoSignaturesShouldReportError(t *testing.T) {
+    _, err := SignatureAggregation([]Signature{})
+    if err != ErrNoSignatures {
+        t.Errorf("Expected ErrNoSignatures, got %v", err)
+    }
+}
+
+func TestKeyAggregationWithNoPublicKeysShouldReportError(t *testing.T) {
+    _, err := KeyAggregation([]PublicKey{})
+    if err != ErrNoPublicKeys {
+        t.Errorf("Expected ErrNoPublicKeys, got %v", err)
+    }
+}
+
+func TestVerifyAggregateMultisigWithNoMessagesShouldReportError(t *testing.T) {
+    _, err := VerifyAggregateMultisig([]Message{}, nil, []PublicKey{})
+    if err != ErrNoMessages {
+        t.Errorf("Expected ErrNoMessages, got %v", err)
+    }
+}
+
+
+func TestNewMultisigContextWithZeroParticipantsShouldReportError(t *testing.T) {
+	_, err := NewMultiSigContext([]PublicKey{})
+
+	if err != ErrNoPublicKeys {
+		t.Errorf("Expected ErrNoMessages, got %v", err)
+	}
+}
+
+
+func setupMultisigContext(t *testing.T, n int) ([]KeyPair, *MultisigContext) {
 	pks := make([]PublicKey, n)
 	kps := make([]KeyPair, n)
 
@@ -165,7 +303,11 @@ func setupKeys(n int) ([]KeyPair, []PublicKey, PublicKey) {
 		pks[i] = kp.PublicKey
 	}
 
-	apk := KeyAggregation(pks)
+	ctx, err := NewMultiSigContext(pks)
+	if err != nil {
+		t.Fatalf("Failed to create multisig context: %v", err)
+	}
 
-	return kps, pks, apk
+	return kps, ctx
 }
+
