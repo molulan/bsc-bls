@@ -1,61 +1,9 @@
-package main
+package crypto
 
 import (
-	"crypto/rand"
-	"crypto/sha256"
-
 	e "github.com/cloudflare/circl/ecc/bls12381"
 )
 
-type Message []byte
-
-type SecretKey *e.Scalar
-type PublicKey *e.G2
-
-type KeyPair struct {
-	SecretKey SecretKey
-	PublicKey PublicKey
-}
-
-type Signature *e.G1
-
-func KeyGen() KeyPair {
-	sk := new(e.Scalar)
-	sk.Random(rand.Reader)
-
-	pk := new(e.G2)
-	pk.ScalarMult(sk, e.G2Generator())
-
-	return KeyPair{sk, pk}
-}
-
-func Sign(msg Message, sk SecretKey) Signature {
-	h := hashToG1(msg)
-
-	signature := new(e.G1)
-	signature.ScalarMult(sk, h)
-
-	return signature
-}
-
-func Verify(msg Message, sig Signature, pk PublicKey) bool {
-	h := hashToG1(msg)
-
-	gt1 := e.Pair(h, pk)
-
-	gt2 := e.Pair(sig, e.G2Generator())
-
-	return gt1.IsEqual(gt2)
-}
-
-func hashToG1(msg Message) *e.G1 {
-	h := new(e.G1)
-	dst := []byte(SignatureDst)
-
-	h.Hash(msg, dst)
-
-	return h
-}
 
 func KeyAggregation(pks []PublicKey) PublicKey {
 	apk := new(e.G2)
@@ -73,22 +21,6 @@ func KeyAggregation(pks []PublicKey) PublicKey {
 	return apk
 }
 
-func hashToScalar(pk PublicKey, pks []PublicKey) *e.Scalar {
-	pkSerialized := (*pk).Bytes()
-
-	pksSerialized := make([]byte, 0)
-	for _, pk := range pks {
-		pksSerialized = append(pksSerialized, (*pk).Bytes()...)
-	}
-
-	combined := append(pksSerialized, pkSerialized...)
-	hash := sha256.Sum256(combined)
-
-	scalar := new(e.Scalar)
-	scalar.SetBytes(hash[:])
-
-	return scalar
-}
 
 func MuSign(msg Message, kp KeyPair, pks []PublicKey, apk PublicKey) Signature {
 	msg = append(msg, (*apk).Bytes()...)
@@ -104,6 +36,7 @@ func MuSign(msg Message, kp KeyPair, pks []PublicKey, apk PublicKey) Signature {
 	return partialSigature
 }
 
+
 func SignatureAggregation(sigs []Signature) Signature {
 	aggregateSignature := new(e.G1)
 	aggregateSignature.SetIdentity()
@@ -115,6 +48,7 @@ func SignatureAggregation(sigs []Signature) Signature {
 	return aggregateSignature
 }
 
+
 func VerifyMultisig(msg Message, sig Signature, apk PublicKey) bool {
 	msg = append(msg, (*apk).Bytes()...)
 	h := hashToG1(msg)
@@ -125,6 +59,7 @@ func VerifyMultisig(msg Message, sig Signature, apk PublicKey) bool {
 
 	return gt1.IsEqual(gt2)
 }
+
 
 func VerifyAggregateMultisig(msgs []Message, sig Signature, apks []PublicKey) bool {
 	left := e.Pair(sig, e.G2Generator())
