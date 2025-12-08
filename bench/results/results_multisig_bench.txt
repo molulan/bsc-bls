@@ -1,0 +1,76 @@
+goos: linux
+goarch: amd64
+pkg: github.com/molulan/bsc-bls/bench
+cpu: 12th Gen Intel(R) Core(TM) i5-12500H
+BenchmarkMultisigVerification/individual_verification_of_1_signatures-2         	     427	   3289606 ns/op	    3201 B/op	      38 allocs/op
+BenchmarkMultisigVerification/individual_verification_of_1_signatures-2         	     187	   5852501 ns/op	    3200 B/op	      38 allocs/op
+BenchmarkMultisigVerification/individual_verification_of_1_signatures-2         	     424	   3788455 ns/op	    3200 B/op	      38 allocs/op
+BenchmarkMultisigVerification/individual_verification_of_1_signatures-2         	     232	   5232108 ns/op	    3200 B/op	      38 allocs/op
+BenchmarkMultisigVerification/individual_verification_of_1_signatures-2         	     379	   5155838 ns/op	    3200 B/op	      38 allocs/op
+BenchmarkMultisigVerification/aggregate_verification_of_1_signatures-2          	     302	   4144835 ns/op	    3200 B/op	      38 allocs/op
+BenchmarkMultisigVerification/aggregate_verification_of_1_signatures-2          	     482	   3234061 ns/op	    3200 B/op	      38 allocs/op
+BenchmarkMultisigVerification/aggregate_verification_of_1_signatures-2          	     404	   2685305 ns/op	    3200 B/op	      38 allocs/op
+BenchmarkMultisigVerification/aggregate_verification_of_1_signatures-2          	     349	   3475130 ns/op	    3200 B/op	      38 allocs/op
+BenchmarkMultisigVerification/aggregate_verification_of_1_signatures-2          	     366	   3514091 ns/op	    3200 B/op	      38 allocs/op
+BenchmarkMultisigVerification/individual_verification_of_5_signatures-2         	      67	  25031958 ns/op	   16000 B/op	     190 allocs/op
+BenchmarkMultisigVerification/individual_verification_of_5_signatures-2         	      99	  24034177 ns/op	   16001 B/op	     190 allocs/op
+BenchmarkMultisigVerification/individual_verification_of_5_signatures-2         	      70	  18407198 ns/op	   16002 B/op	     190 allocs/op
+BenchmarkMultisigVerification/individual_verification_of_5_signatures-2         	      45	  23765970 ns/op	   16000 B/op	     190 allocs/op
+BenchmarkMultisigVerification/individual_verification_of_5_signatures-2         	      54	  21046660 ns/op	   16000 B/op	     190 allocs/op
+BenchmarkMultisigVerification/aggregate_verification_of_5_signatures-2          	      91	  15339251 ns/op	   13697 B/op	     186 allocs/op
+BenchmarkMultisigVerification/aggregate_verification_of_5_signatures-2          	      73	  16992512 ns/op	   13696 B/op	     186 allocs/op
+BenchmarkMultisigVerification/aggregate_verification_of_5_signatures-2          	     104	  10833806 ns/op	   13696 B/op	     186 allocs/op
+BenchmarkMultisigVerification/aggregate_verification_of_5_signatures-2          	     100	  12750191 ns/op	   13696 B/op	     186 allocs/op
+BenchmarkMultisigVerification/aggregate_verification_of_5_signatures-2          	      73	  18192899 ns/op	   13696 B/op	     186 allocs/op
+BenchmarkMultisigVerification/individual_verification_of_10_signatures-2        	      20	  57944272 ns/op	   32000 B/op	     380 allocs/op
+BenchmarkMultisigVerification/individual_verification_of_10_signatures-2        	      21	  58695595 ns/op	   32000 B/op	     380 allocs/op
+BenchmarkMultisigVerification/individual_verification_of_10_signatures-2        	      20	  54494400 ns/op	   32000 B/op	     380 allocs/op
+BenchmarkMultisigVerification/individual_verification_of_10_signatures-2        	      28	  46136486 ns/op	   32000 B/op	     380 allocs/op
+BenchmarkMultisigVerification/individual_verification_of_10_signatures-2        	      31	  37531281 ns/op	   32000 B/op	     380 allocs/op
+BenchmarkMultisigVerification/aggregate_verification_of_10_signatures-2         	      80	  28920568 ns/op	   26816 B/op	     371 allocs/op
+BenchmarkMultisigVerification/aggregate_verification_of_10_signatures-2         	      44	  25303041 ns/op	   26816 B/op	     371 allocs/op
+BenchmarkMultisigVerification/aggregate_verification_of_10_signatures-2         	      39	  29704749 ns/op	   26816 B/op	     371 allocs/op
+BenchmarkMultisigVerification/aggregate_verification_of_10_signatures-2         	      82	  27190126 ns/op	   26816 B/op	     371 allocs/op
+BenchmarkMultisigVerification/aggregate_verification_of_10_signatures-2         	      58	  18014941 ns/op	   26819 B/op	     371 allocs/op
+BenchmarkMultisigVerification/individual_verification_of_25_signatures-2        	      18	  91156514 ns/op	   80000 B/op	     950 allocs/op
+BenchmarkMultisigVerification/individual_verification_of_25_signatures-2        	      13	  89478965 ns/op	   80000 B/op	     950 allocs/op
+BenchmarkMultisigVerification/individual_verification_of_25_signatures-2        	      18	  80643311 ns/op	   80000 B/op	     950 allocs/op
+BenchmarkMultisigVerification/individual_verification_of_25_signatures-2        	      14	  78107872 ns/op	   80000 B/op	     950 allocs/op
+BenchmarkMultisigVerification/individual_verification_of_25_signatures-2        	      19	  71054358 ns/op	   80009 B/op	     950 allocs/op
+BenchmarkMultisigVerification/aggregate_verification_of_25_signatures-2         	      33	  47899830 ns/op	   66194 B/op	     926 allocs/op
+BenchmarkMultisigVerification/aggregate_verification_of_25_signatures-2         	      34	  45434601 ns/op	   66194 B/op	     926 allocs/op
+BenchmarkMultisigVerification/aggregate_verification_of_25_signatures-2         	      34	  77834085 ns/op	   66196 B/op	     926 allocs/op
+BenchmarkMultisigVerification/aggregate_verification_of_25_signatures-2         	      36	  53700550 ns/op	   66198 B/op	     926 allocs/op
+BenchmarkMultisigVerification/aggregate_verification_of_25_signatures-2         	      34	  43978023 ns/op	   66188 B/op	     926 allocs/op
+BenchmarkMultisigVerification/individual_verification_of_50_signatures-2        	       7	 155011597 ns/op	  160025 B/op	    1900 allocs/op
+BenchmarkMultisigVerification/individual_verification_of_50_signatures-2        	       8	 143667510 ns/op	  160000 B/op	    1900 allocs/op
+BenchmarkMultisigVerification/individual_verification_of_50_signatures-2        	       4	 254597665 ns/op	  160044 B/op	    1900 allocs/op
+BenchmarkMultisigVerification/individual_verification_of_50_signatures-2        	       7	 161790794 ns/op	  160000 B/op	    1900 allocs/op
+BenchmarkMultisigVerification/individual_verification_of_50_signatures-2        	       6	 186845214 ns/op	  160000 B/op	    1900 allocs/op
+BenchmarkMultisigVerification/aggregate_verification_of_50_signatures-2         	      18	  79510761 ns/op	  131776 B/op	    1851 allocs/op
+BenchmarkMultisigVerification/aggregate_verification_of_50_signatures-2         	      16	  85798961 ns/op	  131776 B/op	    1851 allocs/op
+BenchmarkMultisigVerification/aggregate_verification_of_50_signatures-2         	      18	  72536762 ns/op	  131792 B/op	    1851 allocs/op
+BenchmarkMultisigVerification/aggregate_verification_of_50_signatures-2         	      18	  90031210 ns/op	  131785 B/op	    1851 allocs/op
+BenchmarkMultisigVerification/aggregate_verification_of_50_signatures-2         	      16	  73147899 ns/op	  131787 B/op	    1851 allocs/op
+BenchmarkMultisigVerification/individual_verification_of_75_signatures-2        	       4	 284441889 ns/op	  240000 B/op	    2850 allocs/op
+BenchmarkMultisigVerification/individual_verification_of_75_signatures-2        	       5	 241971314 ns/op	  240000 B/op	    2850 allocs/op
+BenchmarkMultisigVerification/individual_verification_of_75_signatures-2        	       6	 239731032 ns/op	  240000 B/op	    2850 allocs/op
+BenchmarkMultisigVerification/individual_verification_of_75_signatures-2        	       6	 278943524 ns/op	  240000 B/op	    2850 allocs/op
+BenchmarkMultisigVerification/individual_verification_of_75_signatures-2        	       4	 302365476 ns/op	  240000 B/op	    2850 allocs/op
+BenchmarkMultisigVerification/aggregate_verification_of_75_signatures-2         	       9	 134200128 ns/op	  197455 B/op	    2776 allocs/op
+BenchmarkMultisigVerification/aggregate_verification_of_75_signatures-2         	       8	 145411736 ns/op	  197398 B/op	    2776 allocs/op
+BenchmarkMultisigVerification/aggregate_verification_of_75_signatures-2         	       7	 238104849 ns/op	  197376 B/op	    2776 allocs/op
+BenchmarkMultisigVerification/aggregate_verification_of_75_signatures-2         	       8	 131077292 ns/op	  197376 B/op	    2776 allocs/op
+BenchmarkMultisigVerification/aggregate_verification_of_75_signatures-2         	       7	 156049540 ns/op	  197376 B/op	    2776 allocs/op
+BenchmarkMultisigVerification/individual_verification_of_100_signatures-2       	       4	 354293648 ns/op	  320000 B/op	    3800 allocs/op
+BenchmarkMultisigVerification/individual_verification_of_100_signatures-2       	       4	 323508040 ns/op	  320044 B/op	    3800 allocs/op
+BenchmarkMultisigVerification/individual_verification_of_100_signatures-2       	       3	 394498452 ns/op	  320058 B/op	    3800 allocs/op
+BenchmarkMultisigVerification/individual_verification_of_100_signatures-2       	       2	 511966871 ns/op	  320000 B/op	    3800 allocs/op
+BenchmarkMultisigVerification/individual_verification_of_100_signatures-2       	       2	 511808522 ns/op	  320000 B/op	    3800 allocs/op
+BenchmarkMultisigVerification/aggregate_verification_of_100_signatures-2        	       7	 161251497 ns/op	  262976 B/op	    3701 allocs/op
+BenchmarkMultisigVerification/aggregate_verification_of_100_signatures-2        	       8	 152037598 ns/op	  262998 B/op	    3701 allocs/op
+BenchmarkMultisigVerification/aggregate_verification_of_100_signatures-2        	       8	 161182806 ns/op	  262976 B/op	    3701 allocs/op
+BenchmarkMultisigVerification/aggregate_verification_of_100_signatures-2        	       7	 180424517 ns/op	  262976 B/op	    3701 allocs/op
+BenchmarkMultisigVerification/aggregate_verification_of_100_signatures-2        	       7	 156557653 ns/op	  263001 B/op	    3701 allocs/op
+PASS
+ok  	github.com/molulan/bsc-bls/bench	129.046s
