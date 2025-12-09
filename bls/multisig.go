@@ -1,4 +1,4 @@
-package crypto
+package bls
 
 import (
 	e "github.com/cloudflare/circl/ecc/bls12381"
