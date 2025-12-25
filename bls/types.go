@@ -17,8 +17,6 @@ type KeyPair struct {
 type Signature *e.G1
 
 type MultisigContext struct {
-	Participants	[]PublicKey
-	AggregatePk		PublicKey
+	Participants []PublicKey
+	AggregatePk  PublicKey
 }
-
-

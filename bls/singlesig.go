@@ -4,7 +4,6 @@ import (
 	e "github.com/cloudflare/circl/ecc/bls12381"
 )
 
-
 func Sign(msg Message, sk SecretKey) Signature {
 	h := hashToG1(msg)
 
@@ -13,7 +12,6 @@ func Sign(msg Message, sk SecretKey) Signature {
 
 	return signature
 }
-
 
 func Verify(msg Message, sig Signature, pk PublicKey) bool {
 	h := hashToG1(msg)

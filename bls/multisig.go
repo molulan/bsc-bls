@@ -4,7 +4,6 @@ import (
 	e "github.com/cloudflare/circl/ecc/bls12381"
 )
 
-
 func NewMultiSigContext(participants []PublicKey) (*MultisigContext, error) {
 	aggregatePk, err := KeyAggregation(participants)
 	if err != nil {
@@ -13,13 +12,12 @@ func NewMultiSigContext(participants []PublicKey) (*MultisigContext, error) {
 
 	return &MultisigContext{
 		Participants: participants,
-		AggregatePk: aggregatePk,
+		AggregatePk:  aggregatePk,
 	}, nil
 }
 
-
 func (ctx *MultisigContext) Sign(msg Message, kp KeyPair) Signature {
-	
+
 	msg = append(msg, (*ctx.AggregatePk).Bytes()...)
 
 	a := hashToScalar(kp.PublicKey, ctx.Participants)
@@ -33,7 +31,6 @@ func (ctx *MultisigContext) Sign(msg Message, kp KeyPair) Signature {
 	return partialMultisig
 }
 
-
 func (ctx *MultisigContext) Verify(msg Message, sig Signature) bool {
 	msg = append(msg, (*ctx.AggregatePk).Bytes()...)
 	h := hashToG1(msg)
@@ -44,7 +41,6 @@ func (ctx *MultisigContext) Verify(msg Message, sig Signature) bool {
 
 	return gt1.IsEqual(gt2)
 }
-
 
 func KeyAggregation(pks []PublicKey) (PublicKey, error) {
 	if len(pks) == 0 {
@@ -66,7 +62,6 @@ func KeyAggregation(pks []PublicKey) (PublicKey, error) {
 	return apk, nil
 }
 
-
 func SignatureAggregation(sigs []Signature) (Signature, error) {
 	if len(sigs) == 0 {
 		return nil, ErrNoSignatures
@@ -82,14 +77,13 @@ func SignatureAggregation(sigs []Signature) (Signature, error) {
 	return aggregateSignature, nil
 }
 
-
 func VerifyAggregateMultisig(msgs []Message, sig Signature, apks []PublicKey) (bool, error) {
 	if len(msgs) == 0 {
 		return false, ErrNoMessages
 	}
 
 	if len(msgs) != len(apks) {
-		return  false, ErrMismatchedLengths
+		return false, ErrMismatchedLengths
 	}
 
 	gt1 := e.Pair(sig, e.G2Generator())

@@ -7,7 +7,6 @@ import (
 
 const SignatureDst = "sign"
 
-
 func hashToG1(msg Message) *e.G1 {
 	h := new(e.G1)
 	dst := []byte(SignatureDst)
@@ -16,7 +15,6 @@ func hashToG1(msg Message) *e.G1 {
 
 	return h
 }
-
 
 func hashToScalar(pk PublicKey, pks []PublicKey) *e.Scalar {
 	pkSerialized := (*pk).Bytes()
