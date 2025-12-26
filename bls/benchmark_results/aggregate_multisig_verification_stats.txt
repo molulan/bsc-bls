@@ -1,0 +1,18 @@
+goos: linux
+goarch: amd64
+pkg: github.com/molulan/bsc-bls/bls
+cpu: 12th Gen Intel(R) Core(TM) i5-12500H
+                                               │ benchmark_results/aggregate_multisig_verification.txt │
+                                               │                        sec/op                         │
+AggregateMultisigVerification/1_signatures-2                                              4.290m ± 21%
+AggregateMultisigVerification/10_signatures-2                                             24.77m ± 23%
+AggregateMultisigVerification/20_signatures-2                                             55.60m ± 31%
+AggregateMultisigVerification/30_signatures-2                                             83.86m ± 20%
+AggregateMultisigVerification/40_signatures-2                                             82.89m ± 16%
+AggregateMultisigVerification/50_signatures-2                                             94.88m ± 34%
+AggregateMultisigVerification/60_signatures-2                                             131.9m ± 26%
+AggregateMultisigVerification/70_signatures-2                                             148.1m ± 15%
+AggregateMultisigVerification/80_signatures-2                                             177.5m ± 24%
+AggregateMultisigVerification/90_signatures-2                                             204.7m ± 25%
+AggregateMultisigVerification/100_signatures-2                                            202.0m ± 18%
+geomean                                                                                   76.93m
