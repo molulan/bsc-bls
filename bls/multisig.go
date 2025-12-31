@@ -93,8 +93,8 @@ func VerifyAggregateMultisig(msgs []Message, sig Signature, apks []PublicKey) (b
 
 	for i, msg := range msgs {
 		msg = append(msg, (*apks[i]).Bytes()...)
-		next := e.Pair(hashToG1(msg), apks[i])
-		gt2.Mul(gt2, next)
+		temp := e.Pair(hashToG1(msg), apks[i])
+		gt2.Mul(gt2, temp)
 	}
 
 	return gt1.IsEqual(gt2), nil
