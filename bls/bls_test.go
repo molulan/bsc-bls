@@ -281,7 +281,7 @@ func TestVerifyAggregateMultisigWithNoMessagesShouldReportError(t *testing.T) {
 }
 
 func TestNewMultisigContextWithZeroParticipantsShouldReportError(t *testing.T) {
-	_, err := NewMultiSigContext([]PublicKey{})
+	_, err := NewMultisigContext([]PublicKey{})
 
 	if err != ErrNoPublicKeys {
 		t.Errorf("Expected ErrNoMessages, got %v", err)
@@ -298,7 +298,7 @@ func setupMultisigContext(n int) ([]KeyPair, *MultisigContext) {
 		pks[i] = kp.PublicKey
 	}
 
-	ctx, _ := NewMultiSigContext(pks)
+	ctx, _ := NewMultisigContext(pks)
 
 	return kps, ctx
 }

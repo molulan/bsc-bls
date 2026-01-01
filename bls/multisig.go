@@ -4,7 +4,7 @@ import (
 	e "github.com/cloudflare/circl/ecc/bls12381"
 )
 
-func NewMultiSigContext(participants []PublicKey) (*MultisigContext, error) {
+func NewMultisigContext(participants []PublicKey) (*MultisigContext, error) {
 	aggregatePk, err := KeyAggregation(participants)
 	if err != nil {
 		return nil, err
