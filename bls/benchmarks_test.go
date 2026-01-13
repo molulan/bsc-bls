@@ -32,11 +32,11 @@ func BenchmarkAggregateMultisigVerification(b *testing.B) {
 	}
 }
 
-func BenchmarkIndividualMultisigVerification(b *testing.B) {
+func BenchmarkSequentialMultisigVerification(b *testing.B) {
 	for _, test := range testcases {
 		testname := fmt.Sprintf("%d_signatures", test.numSigs)
 		b.Run(testname, func(b *testing.B) {
-			setupIndividualMultisigVerification(test.numSigs, test.signersPerGroup, b)
+			setupSequentialMultisigVerification(test.numSigs, test.signersPerGroup, b)
 		})
 	}
 }
@@ -121,7 +121,7 @@ func setupSingleSignerMultisigVerification(numSigs int, b *testing.B) {
 	}
 }
 
-func setupIndividualMultisigVerification(numGroups, signersPerGroup int, b *testing.B) {
+func setupSequentialMultisigVerification(numGroups, signersPerGroup int, b *testing.B) {
 	groups := make([]struct {
 		msg Message
 		sig Signature
