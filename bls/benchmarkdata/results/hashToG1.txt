@@ -1,0 +1,56 @@
+goos: linux
+goarch: amd64
+pkg: github.com/molulan/bsc-bls/bls
+cpu: 12th Gen Intel(R) Core(TM) i5-12500H
+BenchmarkHashToG1-2   	   10000	    105359 ns/op
+BenchmarkHashToG1-2   	    7417	    146130 ns/op
+BenchmarkHashToG1-2   	   10000	    133005 ns/op
+BenchmarkHashToG1-2   	    5487	    213544 ns/op
+BenchmarkHashToG1-2   	   10384	    163720 ns/op
+BenchmarkHashToG1-2   	    6724	    167257 ns/op
+BenchmarkHashToG1-2   	   11094	    132925 ns/op
+BenchmarkHashToG1-2   	   10000	    176027 ns/op
+BenchmarkHashToG1-2   	   11558	    102440 ns/op
+BenchmarkHashToG1-2   	   10000	    102693 ns/op
+BenchmarkHashToG1-2   	   10000	    100898 ns/op
+BenchmarkHashToG1-2   	   10000	    101539 ns/op
+BenchmarkHashToG1-2   	   11739	    111301 ns/op
+BenchmarkHashToG1-2   	    7507	    175267 ns/op
+BenchmarkHashToG1-2   	    7578	    142644 ns/op
+BenchmarkHashToG1-2   	   11553	    112821 ns/op
+BenchmarkHashToG1-2   	   10000	    132165 ns/op
+BenchmarkHashToG1-2   	   10000	    110507 ns/op
+BenchmarkHashToG1-2   	   10000	    106921 ns/op
+BenchmarkHashToG1-2   	    7221	    174897 ns/op
+BenchmarkHashToG1-2   	    7537	    146787 ns/op
+BenchmarkHashToG1-2   	   10000	    104521 ns/op
+BenchmarkHashToG1-2   	    5481	    217164 ns/op
+BenchmarkHashToG1-2   	    5462	    217582 ns/op
+BenchmarkHashToG1-2   	   10000	    174488 ns/op
+BenchmarkHashToG1-2   	   10000	    133206 ns/op
+BenchmarkHashToG1-2   	   11409	    105162 ns/op
+BenchmarkHashToG1-2   	   10000	    132573 ns/op
+BenchmarkHashToG1-2   	   10000	    185369 ns/op
+BenchmarkHashToG1-2   	    5472	    217283 ns/op
+BenchmarkHashToG1-2   	    5461	    217605 ns/op
+BenchmarkHashToG1-2   	    5478	    217475 ns/op
+BenchmarkHashToG1-2   	    5436	    217557 ns/op
+BenchmarkHashToG1-2   	   10000	    153193 ns/op
+BenchmarkHashToG1-2   	   10000	    132655 ns/op
+BenchmarkHashToG1-2   	   10000	    133058 ns/op
+BenchmarkHashToG1-2   	    5481	    199860 ns/op
+BenchmarkHashToG1-2   	   11530	    107158 ns/op
+BenchmarkHashToG1-2   	   10000	    124148 ns/op
+BenchmarkHashToG1-2   	   11132	    106852 ns/op
+BenchmarkHashToG1-2   	   10000	    133190 ns/op
+BenchmarkHashToG1-2   	    7526	    175160 ns/op
+BenchmarkHashToG1-2   	    5463	    217126 ns/op
+BenchmarkHashToG1-2   	    5214	    217991 ns/op
+BenchmarkHashToG1-2   	    5508	    215267 ns/op
+BenchmarkHashToG1-2   	    7508	    175644 ns/op
+BenchmarkHashToG1-2   	   10000	    135552 ns/op
+BenchmarkHashToG1-2   	   11611	    125244 ns/op
+BenchmarkHashToG1-2   	    7516	    175446 ns/op
+BenchmarkHashToG1-2   	    7610	    141865 ns/op
+PASS
+ok  	github.com/molulan/bsc-bls/bls	153.258s

@@ -1,0 +1,56 @@
+goos: linux
+goarch: amd64
+pkg: github.com/molulan/bsc-bls/bls
+cpu: 12th Gen Intel(R) Core(TM) i5-12500H
+BenchmarkPairingComputations-2   	     495	   2414564 ns/op
+BenchmarkPairingComputations-2   	     495	   2414319 ns/op
+BenchmarkPairingComputations-2   	    1065	   1125754 ns/op
+BenchmarkPairingComputations-2   	    1065	   1125361 ns/op
+BenchmarkPairingComputations-2   	    1065	   1125708 ns/op
+BenchmarkPairingComputations-2   	    1065	   1135990 ns/op
+BenchmarkPairingComputations-2   	    1065	   1126145 ns/op
+BenchmarkPairingComputations-2   	    1064	   1127307 ns/op
+BenchmarkPairingComputations-2   	    1063	   1127618 ns/op
+BenchmarkPairingComputations-2   	     978	   1147580 ns/op
+BenchmarkPairingComputations-2   	    1064	   1126361 ns/op
+BenchmarkPairingComputations-2   	    1063	   1126923 ns/op
+BenchmarkPairingComputations-2   	     992	   1133882 ns/op
+BenchmarkPairingComputations-2   	    1065	   1125527 ns/op
+BenchmarkPairingComputations-2   	    1064	   1125642 ns/op
+BenchmarkPairingComputations-2   	    1064	   1136218 ns/op
+BenchmarkPairingComputations-2   	    1064	   1126414 ns/op
+BenchmarkPairingComputations-2   	    1063	   1127493 ns/op
+BenchmarkPairingComputations-2   	     982	   1136701 ns/op
+BenchmarkPairingComputations-2   	    1063	   1127509 ns/op
+BenchmarkPairingComputations-2   	    1063	   1127374 ns/op
+BenchmarkPairingComputations-2   	    1000	   1134776 ns/op
+BenchmarkPairingComputations-2   	    1063	   1127365 ns/op
+BenchmarkPairingComputations-2   	    1063	   1127389 ns/op
+BenchmarkPairingComputations-2   	    1063	   1127255 ns/op
+BenchmarkPairingComputations-2   	     975	   1138127 ns/op
+BenchmarkPairingComputations-2   	    1063	   1127427 ns/op
+BenchmarkPairingComputations-2   	    1063	   1127841 ns/op
+BenchmarkPairingComputations-2   	    1063	   1127448 ns/op
+BenchmarkPairingComputations-2   	     974	   1136715 ns/op
+BenchmarkPairingComputations-2   	    1064	   1136193 ns/op
+BenchmarkPairingComputations-2   	    1063	   1126733 ns/op
+BenchmarkPairingComputations-2   	     972	   1137767 ns/op
+BenchmarkPairingComputations-2   	    1064	   1126443 ns/op
+BenchmarkPairingComputations-2   	    1064	   1127305 ns/op
+BenchmarkPairingComputations-2   	    1064	   1587903 ns/op
+BenchmarkPairingComputations-2   	     496	   2291616 ns/op
+BenchmarkPairingComputations-2   	     982	   1729681 ns/op
+BenchmarkPairingComputations-2   	     799	   1358474 ns/op
+BenchmarkPairingComputations-2   	    1064	   1126795 ns/op
+BenchmarkPairingComputations-2   	    1063	   1126392 ns/op
+BenchmarkPairingComputations-2   	    1064	   1136634 ns/op
+BenchmarkPairingComputations-2   	     970	   1138805 ns/op
+BenchmarkPairingComputations-2   	    1063	   1127631 ns/op
+BenchmarkPairingComputations-2   	     972	   1137683 ns/op
+BenchmarkPairingComputations-2   	    1065	   1125494 ns/op
+BenchmarkPairingComputations-2   	     495	   2415823 ns/op
+BenchmarkPairingComputations-2   	    1064	   1128179 ns/op
+BenchmarkPairingComputations-2   	    1063	   1125958 ns/op
+BenchmarkPairingComputations-2   	    1064	   1125348 ns/op
+PASS
+ok  	github.com/molulan/bsc-bls/bls	124.368s
