@@ -1,0 +1,40 @@
+goos: linux
+goarch: amd64
+pkg: github.com/molulan/bsc-bls/bls
+cpu: 12th Gen Intel(R) Core(TM) i5-12500H
+                                                  │ benchmarkdata/results/benchmarks.txt │
+                                                  │                sec/op                │
+AggregateMultisigVerification/1_signatures-2                                2.408m ± 17%
+AggregateMultisigVerification/10_signatures-2                               13.80m ±  0%
+AggregateMultisigVerification/20_signatures-2                               26.91m ±  1%
+AggregateMultisigVerification/30_signatures-2                               55.50m ± 40%
+AggregateMultisigVerification/40_signatures-2                               51.80m ± 66%
+AggregateMultisigVerification/50_signatures-2                               64.44m ±  0%
+AggregateMultisigVerification/60_signatures-2                               77.04m ±  0%
+AggregateMultisigVerification/70_signatures-2                               90.26m ±  1%
+AggregateMultisigVerification/80_signatures-2                               103.4m ±  2%
+AggregateMultisigVerification/90_signatures-2                               116.1m ±  8%
+AggregateMultisigVerification/100_signatures-2                              127.8m ±  0%
+SequentialMultisigVerification/1_signatures-2                               2.391m ±  0%
+SequentialMultisigVerification/10_signatures-2                              23.93m ±  0%
+SequentialMultisigVerification/20_signatures-2                              47.83m ±  0%
+SequentialMultisigVerification/30_signatures-2                              71.78m ±  0%
+SequentialMultisigVerification/40_signatures-2                              98.13m ± 54%
+SequentialMultisigVerification/50_signatures-2                              119.7m ±  2%
+SequentialMultisigVerification/60_signatures-2                              143.6m ±  0%
+SequentialMultisigVerification/70_signatures-2                              167.4m ±  0%
+SequentialMultisigVerification/80_signatures-2                              194.2m ± 14%
+SequentialMultisigVerification/90_signatures-2                              217.5m ±  2%
+SequentialMultisigVerification/100_signatures-2                             239.3m ±  0%
+SinglesigVerification/1_signatures-2                                        2.386m ±  1%
+SinglesigVerification/10_signatures-2                                       23.85m ±  0%
+SinglesigVerification/20_signatures-2                                       47.68m ±  0%
+SinglesigVerification/30_signatures-2                                       71.58m ±  0%
+SinglesigVerification/40_signatures-2                                       95.46m ±  2%
+SinglesigVerification/50_signatures-2                                       119.3m ±  0%
+SinglesigVerification/60_signatures-2                                       143.1m ±  0%
+SinglesigVerification/70_signatures-2                                       166.9m ±  0%
+SinglesigVerification/80_signatures-2                                       190.8m ±  0%
+SinglesigVerification/90_signatures-2                                       214.7m ±  0%
+SinglesigVerification/100_signatures-2                                      238.5m ±  0%
+geomean                                                                     67.31m
