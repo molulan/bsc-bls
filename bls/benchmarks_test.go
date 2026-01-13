@@ -58,15 +58,6 @@ func BenchmarkSingleSignerMultisigVerification(b *testing.B) {
 	}
 }
 
-func BenchmarkSingleSignerAggregateMultisigVerification(b *testing.B) {
-	for _, test := range testcases {
-		testname := fmt.Sprintf("%d_signatures", test.numSigs)
-		b.Run(testname, func(b *testing.B) {
-			setupSingleSignerAggregateMultisigVerification(test.numSigs, b)
-		})
-	}
-}
-
 func setupSinglesigVerification(numSigs int, b *testing.B) {
 	kps := make([]KeyPair, numSigs)
 	sigs := make([]Signature, numSigs)
@@ -109,30 +100,6 @@ func setupSingleSignerMultisigVerification(numSigs int, b *testing.B) {
 		for _, group := range groups {
 			group.ctx.Verify(msg, group.sig)
 		}
-	}
-}
-
-func setupSingleSignerAggregateMultisigVerification(numSigs int, b *testing.B) {
-	apks := make([]PublicKey, numSigs)
-	msgs := make([]Message, numSigs)
-	sigs := make([]Signature, numSigs)
-
-	for i := range numSigs {
-		kps, ctx := setupMultisigContext(1)
-
-		apks[i] = ctx.AggregatePk
-
-		msg := []byte("msg")
-		msgs[i] = msg
-
-		signature := ctx.Sign(msg, kps[0])
-		sigs[i] = signature
-	}
-
-	aggregateSignature, _ := SignatureAggregation(sigs)
-
-	for b.Loop() {
-		VerifyAggregateMultisig(msgs, aggregateSignature, apks)
 	}
 }
 
