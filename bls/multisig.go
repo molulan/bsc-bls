@@ -4,6 +4,7 @@ import (
 	e "github.com/cloudflare/circl/ecc/bls12381"
 )
 
+// Create new multisignature context
 func NewMultisigContext(participants []PublicKey) (*MultisigContext, error) {
 	aggregatePk, err := KeyAggregation(participants)
 	if err != nil {
@@ -16,6 +17,7 @@ func NewMultisigContext(participants []PublicKey) (*MultisigContext, error) {
 	}, nil
 }
 
+// Create a partial signature on a message within a multi-signature context
 func (ctx *MultisigContext) Sign(msg Message, kp KeyPair) Signature {
 	msg = append(msg, (*ctx.AggregatePk).Bytes()...)
 
@@ -32,7 +34,7 @@ func (ctx *MultisigContext) Sign(msg Message, kp KeyPair) Signature {
 	return partialMultisig
 }
 
-
+// Verify a multi-signature on a message
 func VerifyMultisig(msg Message, sig Signature, apk PublicKey) bool {
 	msg = append(msg, (*apk).Bytes()...)
 	h := hashToG1(msg)
@@ -44,6 +46,7 @@ func VerifyMultisig(msg Message, sig Signature, apk PublicKey) bool {
 	return gt1.IsEqual(gt2)
 }
 
+// Create an aggregate public key
 func KeyAggregation(pks []PublicKey) (PublicKey, error) {
 	if len(pks) == 0 {
 		return nil, ErrNoPublicKeys
@@ -65,6 +68,7 @@ func KeyAggregation(pks []PublicKey) (PublicKey, error) {
 	return apk, nil
 }
 
+// Combine a public key with a set of public keys 
 func combinePublicKeyAndPublicKeySet(pk PublicKey, pks []PublicKey) []byte {
 	pkSerialized := (*pk).Bytes()
 	pksSerialized := serializePublicKeys(pks)
@@ -73,7 +77,8 @@ func combinePublicKeyAndPublicKeySet(pk PublicKey, pks []PublicKey) []byte {
 	return combined
 }
 
-func serializePublicKeys(pks []PublicKey)[]byte {
+// Serialize a set of public keys
+func serializePublicKeys(pks []PublicKey) []byte {
 	pksSerialized := make([]byte, 0)
 	for _, pk := range pks {
 		pksSerialized = append(pksSerialized, (*pk).Bytes()...)
@@ -82,6 +87,8 @@ func serializePublicKeys(pks []PublicKey)[]byte {
 	return pksSerialized
 }
 
+// Combine partial multi-signatures or 
+// Create an aggregate signature
 func SignatureAggregation(sigs []Signature) (Signature, error) {
 	if len(sigs) == 0 {
 		return nil, ErrNoSignatures
@@ -97,6 +104,7 @@ func SignatureAggregation(sigs []Signature) (Signature, error) {
 	return aggregateSignature, nil
 }
 
+// Verify an aggregate multi-signature
 func VerifyAggregateMultisig(msgs []Message, sig Signature, apks []PublicKey) (bool, error) {
 	if len(msgs) == 0 {
 		return false, ErrNoMessages
