@@ -117,7 +117,7 @@ func setupSingleSignerMultisigVerification(numSigs int, b *testing.B) {
 
 	for b.Loop() {
 		for _, group := range groups {
-			VerifyMultisig(msg, group.sig, group.ctx.AggregatePk)
+			group.ctx.Verify(msg, group.sig)
 		}
 	}
 }
@@ -149,7 +149,7 @@ func setupSequentialMultisigVerification(numGroups, signersPerGroup int, b *test
 
 	for b.Loop() {
 		for _, group := range groups {
-			VerifyMultisig(group.msg, group.sig, group.ctx.AggregatePk)
+			group.ctx.Verify(group.msg, group.sig)
 		}
 	}
 }

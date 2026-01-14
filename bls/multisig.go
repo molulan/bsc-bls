@@ -35,11 +35,11 @@ func (ctx *MultisigContext) Sign(msg Message, kp KeyPair) Signature {
 }
 
 // Verify a multi-signature on a message
-func VerifyMultisig(msg Message, sig Signature, apk PublicKey) bool {
-	msg = append(msg, (*apk).Bytes()...)
+func (ctx *MultisigContext) Verify(msg Message, sig Signature) bool {
+	msg = append(msg, (*ctx.AggregatePk).Bytes()...)
 	h := hashToG1(msg)
 
-	gt1 := e.Pair(h, apk)
+	gt1 := e.Pair(h, ctx.AggregatePk)
 
 	gt2 := e.Pair(sig, e.G2Generator())
 

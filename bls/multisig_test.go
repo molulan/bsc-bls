@@ -64,7 +64,7 @@ func TestMultisigSignAndVerify(t *testing.T) {
 			}
 
 			// Act
-			result := VerifyMultisig(msg, signature, ctx.AggregatePk)
+			result := ctx.Verify(msg, signature)
 
 			// Assert
 			if result != test.expectedResult {
@@ -84,7 +84,7 @@ func TestMultisigSignWithNonParticipant(t *testing.T) {
 	expectedResult := false
 
 	// Act
-	result := VerifyMultisig(msg, signature, ctx.AggregatePk)
+	result := ctx.Verify(msg, signature)
 
 	// Assert
 	if result != expectedResult {
