@@ -20,7 +20,7 @@ type KeyPair struct {
 // Signature is a point in the BLS12 curve over Fp
 type Signature *e.G1
 
-// MultisigContext is a struct keeps track of all public keys 
+// MultisigContext is a struct keeps track of all public keys
 // and the corresponding aggregate public of a group of signers
 type MultisigContext struct {
 	Participants []PublicKey

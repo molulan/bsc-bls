@@ -68,7 +68,7 @@ func KeyAggregation(pks []PublicKey) (PublicKey, error) {
 	return apk, nil
 }
 
-// Combine a public key with a set of public keys 
+// Combine a public key with a set of public keys
 func combinePublicKeyAndPublicKeySet(pk PublicKey, pks []PublicKey) []byte {
 	pkSerialized := (*pk).Bytes()
 	pksSerialized := serializePublicKeys(pks)
@@ -87,7 +87,7 @@ func serializePublicKeys(pks []PublicKey) []byte {
 	return pksSerialized
 }
 
-// Combine partial multi-signatures or 
+// Combine partial multi-signatures or
 // Create an aggregate signature
 func SignatureAggregation(sigs []Signature) (Signature, error) {
 	if len(sigs) == 0 {
