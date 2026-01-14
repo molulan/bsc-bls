@@ -7,6 +7,7 @@ import (
 
 const SignatureDst = "sign"
 
+// hashes a message to a point in G1
 func hashToG1(msg Message) *e.G1 {
 	h := new(e.G1)
 	dst := []byte(SignatureDst)
@@ -16,6 +17,7 @@ func hashToG1(msg Message) *e.G1 {
 	return h
 }
 
+// hashes a byte array to a scalar
 func hashToScalar(x []byte) *e.Scalar {
 	hash := sha256.Sum256(x)
 

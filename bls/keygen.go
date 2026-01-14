@@ -5,6 +5,7 @@ import (
 	e "github.com/cloudflare/circl/ecc/bls12381"
 )
 
+// Generate a random KeyPair
 func KeyGen() KeyPair {
 	sk := new(e.Scalar)
 	sk.Random(rand.Reader)
