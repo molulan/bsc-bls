@@ -17,10 +17,11 @@ func NewMultisigContext(participants []PublicKey) (*MultisigContext, error) {
 }
 
 func (ctx *MultisigContext) Sign(msg Message, kp KeyPair) Signature {
-
 	msg = append(msg, (*ctx.AggregatePk).Bytes()...)
 
-	a := hashToScalar(kp.PublicKey, ctx.Participants)
+	combinedPublicKeys := combinePublicKeyAndPublicKeySet(kp.PublicKey, ctx.Participants)
+
+	a := hashToScalar(combinedPublicKeys)
 
 	temp := new(e.Scalar)
 	temp.Mul(a, kp.SecretKey)
@@ -51,8 +52,9 @@ func KeyAggregation(pks []PublicKey) (PublicKey, error) {
 	apk.SetIdentity()
 
 	for _, pk := range pks {
-		a := hashToScalar(pk, pks)
+		combinedPublicKeys := combinePublicKeyAndPublicKeySet(pk, pks)
 
+		a := hashToScalar(combinedPublicKeys)
 		temp := new(e.G2)
 		temp.ScalarMult(a, pk)
 
@@ -60,6 +62,23 @@ func KeyAggregation(pks []PublicKey) (PublicKey, error) {
 	}
 
 	return apk, nil
+}
+
+func combinePublicKeyAndPublicKeySet(pk PublicKey, pks []PublicKey) []byte {
+	pkSerialized := (*pk).Bytes()
+	pksSerialized := serializePublicKeys(pks)
+	combined := append(pksSerialized, pkSerialized...)
+
+	return combined
+}
+
+func serializePublicKeys(pks []PublicKey)[]byte {
+	pksSerialized := make([]byte, 0)
+	for _, pk := range pks {
+		pksSerialized = append(pksSerialized, (*pk).Bytes()...)
+	}
+
+	return pksSerialized
 }
 
 func SignatureAggregation(sigs []Signature) (Signature, error) {

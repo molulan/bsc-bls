@@ -16,16 +16,8 @@ func hashToG1(msg Message) *e.G1 {
 	return h
 }
 
-func hashToScalar(pk PublicKey, pks []PublicKey) *e.Scalar {
-	pkSerialized := (*pk).Bytes()
-
-	pksSerialized := make([]byte, 0)
-	for _, pk := range pks {
-		pksSerialized = append(pksSerialized, (*pk).Bytes()...)
-	}
-
-	combined := append(pksSerialized, pkSerialized...)
-	hash := sha256.Sum256(combined)
+func hashToScalar(x []byte) *e.Scalar {
+	hash := sha256.Sum256(x)
 
 	scalar := new(e.Scalar)
 	scalar.SetBytes(hash[:])

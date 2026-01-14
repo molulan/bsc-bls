@@ -35,14 +35,12 @@ func TestHashToG1ProducesDifferentHashesOnDifferentInputs(t *testing.T) {
 }
 
 func TestHashToScalarProducesConsistentHashesOnSameInput(t *testing.T) {
-	kp := KeyGen()
+	x := []byte("byte")
 
-	pks := make([]PublicKey, 0)
-
-	hash := hashToScalar(kp.PublicKey, pks)
+	hash := hashToScalar(x)
 
 	for range 1000 {
-		if hash.IsEqual(hashToScalar(kp.PublicKey, pks)) != 1 {
+		if hash.IsEqual(hashToScalar(x)) != 1 {
 			t.Error("Hashing is not consistent")
 		}
 	}
@@ -51,15 +49,10 @@ func TestHashToScalarProducesConsistentHashesOnSameInput(t *testing.T) {
 func TestHashToScalarProducesDifferentHashesOnDifferentInputs(t *testing.T) {
 	hashSet := make(map[*e.Scalar]bool)
 
-	pks := make([]PublicKey, 0)
-
-	kp := KeyGen()
-	pk := kp.PublicKey
-
-	for range 1000 {
-		pks = append(pks, pk)
-
-		hash := hashToScalar(pk, pks)
+	for i := range 1000 {
+		str := strconv.Itoa(i)
+		b := []byte(str)
+		hash := hashToScalar(b)
 
 		if hashSet[hash] {
 			t.Error("Hash collision found")
