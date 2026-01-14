@@ -3,6 +3,7 @@ package bls
 import (
 	"fmt"
 	"testing"
+
 	e "github.com/cloudflare/circl/ecc/bls12381"
 )
 
@@ -62,15 +63,15 @@ func BenchmarkSingleSignerMultisigVerification(b *testing.B) {
 func BenchmarkPairingComputations(b *testing.B) {
 	g1 := new(e.G1)
 	g2 := new(e.G2)
-	
+
 	for b.Loop() {
-		e.Pair(g1,g2)
+		e.Pair(g1, g2)
 	}
 }
 
 func BenchmarkHashToG1(b *testing.B) {
 	msg := []byte("msg")
-	
+
 	for b.Loop() {
 		hashToG1(msg)
 	}
@@ -116,7 +117,7 @@ func setupSingleSignerMultisigVerification(numSigs int, b *testing.B) {
 
 	for b.Loop() {
 		for _, group := range groups {
-			group.ctx.Verify(msg, group.sig)
+			VerifyMultisig(msg, group.sig, group.ctx.AggregatePk)
 		}
 	}
 }
@@ -148,7 +149,7 @@ func setupSequentialMultisigVerification(numGroups, signersPerGroup int, b *test
 
 	for b.Loop() {
 		for _, group := range groups {
-			group.ctx.Verify(group.msg, group.sig)
+			VerifyMultisig(group.msg, group.sig, group.ctx.AggregatePk)
 		}
 	}
 }

@@ -32,11 +32,12 @@ func (ctx *MultisigContext) Sign(msg Message, kp KeyPair) Signature {
 	return partialMultisig
 }
 
-func (ctx *MultisigContext) Verify(msg Message, sig Signature) bool {
-	msg = append(msg, (*ctx.AggregatePk).Bytes()...)
+
+func VerifyMultisig(msg Message, sig Signature, apk PublicKey) bool {
+	msg = append(msg, (*apk).Bytes()...)
 	h := hashToG1(msg)
 
-	gt1 := e.Pair(h, ctx.AggregatePk)
+	gt1 := e.Pair(h, apk)
 
 	gt2 := e.Pair(sig, e.G2Generator())
 
