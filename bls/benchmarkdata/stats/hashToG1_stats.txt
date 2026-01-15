@@ -1,7 +1,0 @@
-goos: linux
-goarch: amd64
-pkg: github.com/molulan/bsc-bls/bls
-cpu: 12th Gen Intel(R) Core(TM) i5-12500H
-           │ benchmarkdata/results/hash_to_G1.txt │
-           │                sec/op                │
-HashToG1-2                           142.3µ ± 23%

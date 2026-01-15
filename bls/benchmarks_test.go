@@ -61,34 +61,6 @@ func BenchmarkSingleSignerMultisigVerification(b *testing.B) {
 	}
 }
 
-func BenchmarkPairingComputations(b *testing.B) {
-	g1 := new(e.G1)
-	g2 := new(e.G2)
-
-	for b.Loop() {
-		e.Pair(g1, g2)
-	}
-}
-
-func BenchmarkHashToG1(b *testing.B) {
-	msg := []byte("msg")
-
-	for b.Loop() {
-		hashToG1(msg)
-	}
-}
-
-func BenchmarkScalarMultiplicationInG2(b *testing.B) {
-	scalar := new(e.Scalar)
-	scalar.Random(rand.Reader)
-
-	kp := KeyGen()
-
-	for b.Loop() {
-		G2 := new(e.G2)
-		G2.ScalarMult(scalar, kp.PublicKey)
-	}
-}
 
 func setupSinglesigVerification(numSigs int, b *testing.B) {
 	kps := make([]KeyPair, numSigs)

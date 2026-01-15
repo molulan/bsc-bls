@@ -1,7 +1,0 @@
-goos: linux
-goarch: amd64
-pkg: github.com/molulan/bsc-bls/bls
-cpu: 12th Gen Intel(R) Core(TM) i5-12500H
-                      │ benchmarkdata/results/pairing.txt │
-                      │              sec/op               │
-PairingComputations-2                         1.128m ± 1%
