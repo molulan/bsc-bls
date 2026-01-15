@@ -1,6 +1,7 @@
 package bls
 
 import (
+	"crypto/rand"
 	"fmt"
 	"testing"
 
@@ -74,6 +75,18 @@ func BenchmarkHashToG1(b *testing.B) {
 
 	for b.Loop() {
 		hashToG1(msg)
+	}
+}
+
+func BenchmarkScalarMultiplicationInG2(b *testing.B) {
+	scalar := new(e.Scalar)
+	scalar.Random(rand.Reader)
+
+	kp := KeyGen()
+
+	for b.Loop() {
+		G2 := new(e.G2)
+		G2.ScalarMult(scalar, kp.PublicKey)
 	}
 }
 
